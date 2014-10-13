@@ -1,8 +1,8 @@
-require 'crud_rails/version'
-require 'crud_rails/data'
-require 'crud_rails/manager'
+require 'godfather/version'
+require 'godfather/data'
+require 'godfather/manager'
 
-module CrudRails
+module Godfather
   module Controller
     def self.included(base)
       base.send(:before_action, :init_crud, only: %i(where create update destroy))
@@ -54,7 +54,7 @@ module CrudRails
     end
 
     def init_crud
-      @crud = CrudRails::Manager.new({}, model, params[:scope],
+      @crud = Godfather::Manager.new({}, model, params[:scope],
         params[:data], params[:extra_find_scopes])
     end
   end

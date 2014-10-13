@@ -1,4 +1,4 @@
-module CrudRails
+module Godfather
   class Data
     CONTEXT_CLASSES = {
       # 'Client' => Client,

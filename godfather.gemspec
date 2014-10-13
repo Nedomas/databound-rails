@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'crud_rails/version'
+require 'godfather/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "crud_rails"
-  spec.version       = CrudRails::VERSION
+  spec.name          = "godfather"
+  spec.version       = Godfather::VERSION
   spec.authors       = ["Domas"]
   spec.email         = ["domas.bitvinskas@me.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}
