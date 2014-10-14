@@ -43,6 +43,8 @@ module Godfather
   private
 
   def serialized(records)
+    return records unless defined?(ActiveModel::Serializer)
+
     serializer = ActiveModel::Serializer.serializer_for(records.first)
     return records unless serializer
 
@@ -53,8 +55,12 @@ module Godfather
     raise 'Override model method to specify a model to be used in CRUD'
   end
 
+  def override!(name, value, data)
+    value
+  end
+
   def init_crud
-    @crud = Godfather::Manager.new({}, model, params[:scope],
+    @crud = Godfather::Manager.new(self, model, params[:scope],
       params[:data], params[:extra_find_scopes])
   end
 end

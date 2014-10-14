@@ -1,12 +1,12 @@
 module Godfather
   class Manager
-    def initialize(context, model, scope_js, data_js, extra_find_scopes_js = '[]')
+    def initialize(controller, model, scope_js, data_js, extra_find_scopes_js = '[]')
       @model = model
-      @scope = Godfather::Data.new(context, scope_js)
-      @data = Godfather::Data.new(context, data_js).to_h
+      @scope = Godfather::Data.new(controller, scope_js)
+      @data = Godfather::Data.new(controller, data_js).to_h
 
       @extra_find_scopes = JSON.parse(extra_find_scopes_js).map do |extra_scope|
-        Godfather::Data.new(context, extra_scope)
+        Godfather::Data.new(controller, extra_scope)
       end
     end
 
