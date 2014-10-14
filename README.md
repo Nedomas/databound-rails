@@ -1,31 +1,56 @@
 # Godfather
 
-TODO: Write a gem description
+Exposes ActiveRecord records to the Javascript side.
+
+This is the **Ruby on Rails** backend part for the ``Godfather.js`` lib.
+
+For more information go to [Godfather.js repo](https://github.com/Nedomas/godfather.js).
+
+## Javascript library
+
+It does something like this out of the box.
+
+```js
+  User = new Godfather('/users');
+
+  User.update({ id: 15, name: 'Saint John' }).then(function(updated_user) {
+  });
+```
 
 ## Installation
 
-Add this line to your application's Gemfile:
+The library has two parts and has Lodash as a dependency.
+
+#### I. Javascript part
+
+Follow the guide on [Godfather.js repo](https://github.com/Nedomas/godfather.js).
+
+#### II. Ruby on Rails part
+
+**1.** Add ``gem 'godfather'`` to ``Gemfile``.
+
+**2.** Create a controller with method ``model`` which returns the model to be accessed.
+Also include ``Godfather::Controller``
 
 ```ruby
-gem 'godfather'
+class UsersController < ApplicationController
+  include Godfather
+
+  def model
+    User
+  end
+end
 ```
 
-And then execute:
+**3.** Add a route to ``routes.rb``
 
-    $ bundle
+```ruby
+# This creates POST routes on /users to UsersController
+# For where, create, update, destroy
 
-Or install it yourself as:
+godfather_of :users
+```
 
-    $ gem install godfather
+## Additional features
 
-## Usage
-
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/godfather/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+All features are described in [Godfather.js repo](https://github.com/Nedomas/godfather.js).
