@@ -1,3 +1,7 @@
+[![Code Climate](https://codeclimate.com/github/Nedomas/godfather/badges/gpa.svg)](https://codeclimate.com/github/Nedomas/godfather)
+[![Gem Version](https://badge.fury.io/rb/godfather.svg)](http://badge.fury.io/rb/godfather)
+[![Build Status](https://travis-ci.org/Nedomas/godfather.svg?branch=master)](https://travis-ci.org/Nedomas/godfather)
+
 # Godfather
 
 Exposes ActiveRecord records to the Javascript side.
@@ -37,7 +41,7 @@ class UsersController < ApplicationController
   include Godfather
 
   private
-  
+
   def model
     User
   end
