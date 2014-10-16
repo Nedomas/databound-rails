@@ -24,7 +24,7 @@ module Godfather
         check_strict!(key, val)
 
         block = dsl_block(key, val)
-        obj[key] = block ? block.call(@params) : val
+        obj[key] = block ? block.call(@params.to_options) : val
       end
     end
 

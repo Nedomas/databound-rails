@@ -10,4 +10,8 @@ class DslController < ApplicationController
   dsl(:city, :hottest) do
     'Miami'
   end
+
+  dsl(:city, :coldest) do |params|
+    "Where #{params[:name]} lives"
+  end
 end
