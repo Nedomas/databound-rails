@@ -1,5 +1,5 @@
 module Godfather
-  class UnpermittedError < RuntimeError; end
+  class NotPermittedError < RuntimeError; end
   class Manager
     def initialize(controller)
       @model = controller.send(:model)
@@ -54,7 +54,7 @@ module Godfather
       unpermitted = requested - @permitted_columns.map(&:to_s)
       return if unpermitted.empty?
 
-      raise UnpermittedError, "Request includes unpermitted columns: #{unpermitted.join(', ')}"
+      raise NotPermittedError, "Request includes unpermitted columns: #{unpermitted.join(', ')}"
     end
   end
 end

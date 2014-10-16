@@ -7,7 +7,7 @@ class DslController < ApplicationController
     User
   end
 
-  dsl(:city, :hottest) do |data|
+  dsl(:city, :hottest) do
     'Miami'
   end
 end

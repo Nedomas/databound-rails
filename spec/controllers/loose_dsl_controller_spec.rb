@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DslController, type: :controller do
+describe LooseDslController, type: :controller do
   describe '#create strict' do
     before :each do
       data = {
@@ -32,7 +32,7 @@ describe DslController, type: :controller do
   end
 
   describe '#create loose' do
-    it 'responds with error' do
+    before :each do
       data = {
         data: {
           name: 'John',
@@ -42,10 +42,21 @@ describe DslController, type: :controller do
         extra_find_scopes: [],
       }
 
-      expect { post(:create, javascriptize(data)) }.to raise_error(
-        Godfather::NotPermittedError,
-        "DSL column 'city' received unmatched string 'New York'." \
-        " Use 'strict: false' in DSL definition to allow everything.",
+      post(:create, javascriptize(data))
+    end
+
+    it 'responds consistently to js' do
+      expect(rubize(response)).to eq(success: true, id: 1)
+    end
+
+    it 'creates the record' do
+      user = User.find(1)
+      user_attributes = user.attributes.to_options
+
+      expect(user_attributes.slice(:id, :name, :city)).to eq(
+        id: 1,
+        name: 'John',
+        city: 'New York',
       )
     end
   end
@@ -83,23 +94,33 @@ describe DslController, type: :controller do
   end
 
   describe '#update loose' do
-    it 'responds with error' do
-      User.create(name: 'John', city: 'Los Angeles')
+    before :each do
+      User.create(name: 'John', city: 'New York')
 
       data = {
         data: {
           id: 1,
-          name: 'John',
-          city: 'New York',
+          city: 'Los Angeles',
         },
         scope: {},
         extra_find_scopes: [],
       }
 
-      expect { post(:create, javascriptize(data)) }.to raise_error(
-        Godfather::NotPermittedError,
-        "DSL column 'city' received unmatched string 'New York'." \
-        " Use 'strict: false' in DSL definition to allow everything.",
+      post(:update, javascriptize(data))
+    end
+
+    it 'responds consistently to js' do
+      expect(rubize(response)).to eq(success: true, id: 1)
+    end
+
+    it 'updates the record' do
+      user = User.find(1)
+      user_attributes = user.attributes.to_options
+
+      expect(user_attributes.slice(:id, :name, :city)).to eq(
+        id: 1,
+        name: 'John',
+        city: 'Los Angeles',
       )
     end
   end

@@ -12,7 +12,7 @@ describe PermittedColumnsController, type: :controller do
       }
 
       expect { post(:create, javascriptize(data)) }.to raise_error(
-        Godfather::UnpermittedError,
+        Godfather::NotPermittedError,
         'Request includes unpermitted columns: city',
       )
     end
@@ -46,7 +46,7 @@ describe PermittedColumnsController, type: :controller do
       }
 
       expect { post(:update, javascriptize(data)) }.to raise_error(
-        Godfather::UnpermittedError,
+        Godfather::NotPermittedError,
         'Request includes unpermitted columns: city',
       )
     end
@@ -77,7 +77,7 @@ describe PermittedColumnsController, type: :controller do
         }
 
         expect { post(:create, javascriptize(data)) }.to raise_error(
-          Godfather::UnpermittedError,
+          Godfather::NotPermittedError,
           'Request includes unpermitted columns: city',
         )
       end
@@ -95,7 +95,7 @@ describe PermittedColumnsController, type: :controller do
         }
 
         expect { post(:update, javascriptize(data)) }.to raise_error(
-          Godfather::UnpermittedError,
+          Godfather::NotPermittedError,
           'Request includes unpermitted columns: city',
         )
       end

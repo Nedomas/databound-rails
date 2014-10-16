@@ -59,11 +59,8 @@ module Godfather
   end
 
   def permitted_columns
+    # permit all by default
     model.column_names
-  end
-
-  def override!(name, value, data)
-    value
   end
 
   def init_crud
@@ -71,14 +68,16 @@ module Godfather
   end
 
   module ClassMethods
-    def dsl(name, value, &block)
+    attr_reader :dsls
+    attr_reader :stricts
+
+    def dsl(name, value, strict: true, &block)
+      @stricts ||= {}
+      @stricts[name.to_s] = strict
+
       @dsls ||= {}
       @dsls[name.to_s] ||= {}
       @dsls[name.to_s][value.to_s] = block
-    end
-
-    def dsls
-      @dsls
     end
   end
 end

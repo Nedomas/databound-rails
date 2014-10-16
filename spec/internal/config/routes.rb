@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   godfather_of :no_model
   godfather_of :permitted_columns
   godfather_of :dsl
+  godfather_of :loose_dsl
 end

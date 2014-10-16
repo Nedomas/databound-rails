@@ -21,9 +21,31 @@ module Godfather
 
     def interpolated_params
       @params.each_with_object({}) do |(key, val), obj|
-        dsl_block = @controller.class.dsls[key].andand[val]
-        obj[key] = dsl_block ? dsl_block.call(@params) : val
+        check_strict!(key, val)
+
+        block = dsl_block(key, val)
+        obj[key] = block ? block.call(@params) : val
       end
+    end
+
+    def dsl_block(key, val)
+      dsl_key(key).andand[val]
+    end
+
+    def dsl_key(key)
+      @controller.class.dsls.andand[key]
+    end
+
+    def check_strict!(key, val)
+      return unless dsl_key(key)
+      return unless strict?(key) and !dsl_block(key, val)
+
+      raise NotPermittedError, "DSL column '#{key}' received unmatched string '#{val}'." \
+        " Use 'strict: false' in DSL definition to allow everything."
+    end
+
+    def strict?(key)
+      @controller.class.stricts.andand[key]
     end
   end
 end
