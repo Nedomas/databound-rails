@@ -1,7 +1,14 @@
 module Godfather
+  class UnpermittedError < RuntimeError; end
   class Manager
-    def initialize(controller, model, scope_js, data_js, extra_find_scopes_js = '[]')
-      @model = model
+    def initialize(controller)
+      @model = controller.send(:model)
+      @permitted_columns = controller.send(:permitted_columns)
+
+      scope_js = controller.params[:scope]
+      data_js = controller.params[:data]
+      extra_find_scopes_js = controller.params[:extra_find_scopes] || '[]'
+
       @scope = Godfather::Data.new(controller, scope_js)
       @data = Godfather::Data.new(controller, data_js).to_h
 
@@ -22,24 +29,32 @@ module Godfather
     end
 
     def create_from_data
+      check_params!
       @model.where(@scope.to_h).create(@data)
     end
 
     def update_from_data
-      new_data = @data
-      id = new_data.delete('id')
+      id = @data.delete('id')
 
-      permitted_cols = @model.column_names
-      updatable_data = new_data.slice(*permitted_cols)
-
+      check_params!
       record = @model.find(id)
-      record.update(updatable_data)
+      record.update(@data)
 
       record
     end
 
     def destroy_from_data
       @model.find(@data['id']).destroy
+    end
+
+    private
+
+    def check_params!
+      requested = [@scope, @data].map(&:to_h).flat_map(&:keys)
+      unpermitted = requested - @permitted_columns.map(&:to_s)
+      return if unpermitted.empty?
+
+      raise UnpermittedError, "Request includes unpermitted columns: #{unpermitted.join(', ')}"
     end
   end
 end

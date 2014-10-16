@@ -55,12 +55,15 @@ module Godfather
     raise 'Override model method to specify a model to be used in CRUD'
   end
 
+  def permitted_columns
+    model.column_names
+  end
+
   def override!(name, value, data)
     value
   end
 
   def init_crud
-    @crud = Godfather::Manager.new(self, model, params[:scope],
-      params[:data], params[:extra_find_scopes])
+    @crud = Godfather::Manager.new(self)
   end
 end
