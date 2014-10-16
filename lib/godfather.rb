@@ -1,3 +1,5 @@
+require 'andand'
+
 require 'godfather/version'
 require 'godfather/data'
 require 'godfather/manager'
@@ -6,6 +8,7 @@ require 'godfather/rails/routes'
 module Godfather
   def self.included(base)
     base.send(:before_action, :init_crud, only: %i(where create update destroy))
+    base.extend(ClassMethods)
   end
 
   def where
@@ -65,5 +68,17 @@ module Godfather
 
   def init_crud
     @crud = Godfather::Manager.new(self)
+  end
+
+  module ClassMethods
+    def dsl(name, value, &block)
+      @dsls ||= {}
+      @dsls[name.to_s] ||= {}
+      @dsls[name.to_s][value.to_s] = block
+    end
+
+    def dsls
+      @dsls
+    end
   end
 end

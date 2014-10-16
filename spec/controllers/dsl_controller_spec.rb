@@ -1,0 +1,66 @@
+require 'spec_helper'
+
+describe DslController, type: :controller do
+  describe '#create' do
+    before :each do
+      data = {
+        data: {
+          name: 'John',
+          city: 'hottest',
+        },
+        scope: {},
+        extra_find_scopes: [],
+      }
+
+      post(:create, javascriptize(data))
+    end
+
+    it 'responds consistently to js' do
+      expect(rubize(response)).to eq(success: true, id: 1)
+    end
+
+    it 'creates the record' do
+      user = User.find(1)
+      user_attributes = user.attributes.to_options
+
+      expect(user_attributes.slice(:id, :name, :city)).to eq(
+        id: 1,
+        name: 'John',
+        city: 'Miami',
+      )
+    end
+  end
+
+  describe '#update' do
+    before :each do
+      User.create(name: 'John', city: 'New York')
+
+      data = {
+        data: {
+          id: 1,
+          city: 'hottest',
+        },
+        scope: {},
+        extra_find_scopes: [],
+      }
+
+      post(:update, javascriptize(data))
+    end
+
+    it 'responds consistently to js' do
+      expect(rubize(response)).to eq(success: true, id: 1)
+    end
+
+    it 'updates the record' do
+      user = User.find(1)
+      user_attributes = user.attributes.to_options
+
+      expect(user_attributes.slice(:id, :name, :city)).to eq(
+        id: 1,
+        name: 'John',
+        city: 'Miami',
+      )
+    end
+  end
+  # raises when its not a dsl
+end

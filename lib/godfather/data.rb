@@ -1,12 +1,12 @@
 module Godfather
   class Data
     def initialize(controller, json)
-      @controller = controller
-
       return unless json
-      hash = JSON.parse(json) if json.is_a?(String)
-      hash = json if json.is_a?(Hash)
-      @data = with_overrides(hash)
+
+      @controller = controller
+      @params = JSON.parse(json) if json.is_a?(String)
+      @params = json if json.is_a?(Hash)
+      @data = interpolated_params
     end
 
     def records(model)
@@ -19,14 +19,11 @@ module Godfather
 
     private
 
-    def with_overrides(hash)
-      result = {}
-
-      hash.each do |key, val|
-        result[key] = @controller.send(:override!, key.to_sym, val, hash)
+    def interpolated_params
+      @params.each_with_object({}) do |(key, val), obj|
+        dsl_block = @controller.class.dsls[key].andand[val]
+        obj[key] = dsl_block ? dsl_block.call(@params) : val
       end
-
-      result
     end
   end
 end
