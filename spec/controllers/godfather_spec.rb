@@ -99,4 +99,40 @@ describe UsersController, type: :controller do
       expect { post(:update, javascriptize(data)) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  describe '#destroy' do
+    before :each do
+      @user = User.create(name: 'John', city: 'New York')
+    end
+
+    describe 'destroy record correctly' do
+      before :each do
+        data = {
+          data: {
+            id: @user.id,
+          },
+          scope: {},
+          extra_find_scopes: [],
+        }
+
+        post(:destroy, javascriptize(data))
+      end
+
+      it 'respond with success' do
+        expect(rubize(response)).to eq(success: true)
+      end
+    end
+
+    it 'respond with error when id is missing' do
+      data = {
+        data: {
+          id: 2,
+        },
+        scope: {},
+        extra_find_scopes: [],
+      }
+
+      expect { post(:update, javascriptize(data)) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end
