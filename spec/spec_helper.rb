@@ -19,5 +19,18 @@ def javascriptize(ruby_obj)
 end
 
 def rubize(response)
-  JSON.parse(response.body).to_options
+  optionize(JSON.parse(response.body))
+end
+
+def optionize(obj)
+  case obj
+  when Array
+    obj.map(&:to_options)
+  else
+    obj.to_options
+  end
+end
+
+def gather(attribute, response)
+  rubize(response).map { |record| record[attribute] }
 end
