@@ -1,7 +1,7 @@
-[![Code Climate](https://codeclimate.com/github/Nedomas/databound/badges/gpa.svg)](https://codeclimate.com/github/Nedomas/databound-rails)
+[![Code Climate](https://codeclimate.com/github/Nedomas/databound-rails/badges/gpa.svg)](https://codeclimate.com/github/Nedomas/databound-rails)
 [![Gem Version](https://badge.fury.io/rb/databound.svg)](http://badge.fury.io/rb/databound)
-[![Build Status](https://travis-ci.org/Nedomas/databound.svg?branch=master)](https://travis-ci.org/Nedomas/databound-rails)
-[![Dependency Status](https://gemnasium.com/Nedomas/databound.svg)](https://gemnasium.com/Nedomas/databound-rails)
+[![Build Status](https://travis-ci.org/Nedomas/databound-rails.svg?branch=master)](https://travis-ci.org/Nedomas/databound-rails)
+[![Dependency Status](https://gemnasium.com/Nedomas/databound-rails.svg)](https://gemnasium.com/Nedomas/databound-rails)
 
 ![Databound](https://cloud.githubusercontent.com/assets/1877286/4743542/df89dcec-5a28-11e4-9114-6f383fe269cb.png)
 
