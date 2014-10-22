@@ -35,7 +35,7 @@ Follow the guide on [javascript Databound repo](https://github.com/Nedomas/datab
 **1.** Add ``gem 'databound'`` to ``Gemfile``.
 
 **2.** Create a controller with method ``model`` which returns the model to be accessed.
-Also include ``Databound::Controller``
+Also include ``Databound``
 
 ```ruby
 class UsersController < ApplicationController
