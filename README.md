@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/Nedomas/databound.svg?branch=master)](https://travis-ci.org/Nedomas/databound-rails)
 [![Dependency Status](https://gemnasium.com/Nedomas/databound.svg)](https://gemnasium.com/Nedomas/databound-rails)
 
-# Databound
+![Databound](https://cloud.githubusercontent.com/assets/1877286/4743542/df89dcec-5a28-11e4-9114-6f383fe269cb.png)
 
 Exposes ActiveRecord records to the Javascript side.
 
