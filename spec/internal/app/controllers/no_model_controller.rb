@@ -1,3 +1,3 @@
 class NoModelController < ApplicationController
-  include Godfather
+  include Databound
 end

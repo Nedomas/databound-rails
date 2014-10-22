@@ -1,11 +1,11 @@
 require 'andand'
 
-require 'godfather/version'
-require 'godfather/data'
-require 'godfather/manager'
-require 'godfather/rails/routes'
+require 'databound/version'
+require 'databound/data'
+require 'databound/manager'
+require 'databound/rails/routes'
 
-module Godfather
+module Databound
   def self.included(base)
     base.send(:before_action, :init_crud, only: %i(where create update destroy))
     base.extend(ClassMethods)
@@ -64,7 +64,7 @@ module Godfather
   end
 
   def init_crud
-    @crud = Godfather::Manager.new(self)
+    @crud = Databound::Manager.new(self)
   end
 
   module ClassMethods

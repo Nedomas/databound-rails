@@ -76,7 +76,7 @@ describe DslController, type: :controller do
         }
 
         expect { post(:create, javascriptize(data)) }.to raise_error(
-          Godfather::NotPermittedError,
+          Databound::NotPermittedError,
           "DSL column 'city' received unmatched string 'New York'." \
           " Use 'strict: false' in DSL definition to allow everything.",
         )
@@ -167,7 +167,7 @@ describe DslController, type: :controller do
         }
 
         expect { post(:create, javascriptize(data)) }.to raise_error(
-          Godfather::NotPermittedError,
+          Databound::NotPermittedError,
           "DSL column 'city' received unmatched string 'New York'." \
           " Use 'strict: false' in DSL definition to allow everything.",
         )

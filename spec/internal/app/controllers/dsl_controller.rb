@@ -1,5 +1,5 @@
 class DslController < ApplicationController
-  include Godfather
+  include Databound
 
   private
 

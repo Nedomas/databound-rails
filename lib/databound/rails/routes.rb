@@ -1,5 +1,5 @@
 class ActionDispatch::Routing::Mapper
-  def godfather_of(*resources)
+  def databound(*resources)
     namespace = @scope[:path]
     namespace = namespace[1..-1] if namespace
 

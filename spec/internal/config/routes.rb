@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  godfather_of :users
-  godfather_of :no_model
-  godfather_of :permitted_columns
-  godfather_of :dsl
-  godfather_of :loose_dsl
+  databound :users
+  databound :no_model
+  databound :permitted_columns
+  databound :dsl
+  databound :loose_dsl
 end

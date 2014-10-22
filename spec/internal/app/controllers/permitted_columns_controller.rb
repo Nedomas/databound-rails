@@ -1,5 +1,5 @@
 class PermittedColumnsController < ApplicationController
-  include Godfather
+  include Databound
 
   private
 

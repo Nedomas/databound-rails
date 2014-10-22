@@ -1,4 +1,4 @@
-module Godfather
+module Databound
   class Data
     def initialize(controller, json)
       return unless json

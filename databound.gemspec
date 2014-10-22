@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'godfather/version'
+require 'databound/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'godfather'
-  spec.version       = Godfather::VERSION
+  spec.name          = 'databound'
+  spec.version       = Databound::VERSION
   spec.authors       = ['Domas Bitvinskas']
   spec.email         = ['domas.bitvinskas@me.com']
   spec.summary       = %q{ActiveRecord exposed to the Javascript side and guarded by guns}
-  spec.description   = %q{This is the Ruby on Rails backend part for the Godfather.js lib.}
-  spec.homepage      = 'https://github.com/Nedomas/godfather'
+  spec.description   = %q{This is the Ruby on Rails backend part for the Databound javascript lib.}
+  spec.homepage      = 'https://github.com/Nedomas/databound'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")

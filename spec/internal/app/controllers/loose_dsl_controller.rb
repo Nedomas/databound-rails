@@ -1,5 +1,5 @@
 class LooseDslController < ApplicationController
-  include Godfather
+  include Databound
 
   private
 

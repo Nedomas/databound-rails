@@ -1,4 +1,4 @@
-module Godfather
+module Databound
   class NotPermittedError < RuntimeError; end
   class Manager
     def initialize(controller)
@@ -9,11 +9,11 @@ module Godfather
       data_js = controller.params[:data]
       extra_find_scopes_js = controller.params[:extra_find_scopes] || '[]'
 
-      @scope = Godfather::Data.new(controller, scope_js)
-      @data = Godfather::Data.new(controller, data_js).to_h
+      @scope = Databound::Data.new(controller, scope_js)
+      @data = Databound::Data.new(controller, data_js).to_h
 
       @extra_find_scopes = JSON.parse(extra_find_scopes_js).map do |extra_scope|
-        Godfather::Data.new(controller, extra_scope)
+        Databound::Data.new(controller, extra_scope)
       end
     end
 
