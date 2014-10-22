@@ -1,15 +1,15 @@
-[![Code Climate](https://codeclimate.com/github/Nedomas/databound/badges/gpa.svg)](https://codeclimate.com/github/Nedomas/databound)
+[![Code Climate](https://codeclimate.com/github/Nedomas/databound/badges/gpa.svg)](https://codeclimate.com/github/Nedomas/databound-rails)
 [![Gem Version](https://badge.fury.io/rb/databound.svg)](http://badge.fury.io/rb/databound)
-[![Build Status](https://travis-ci.org/Nedomas/databound.svg?branch=master)](https://travis-ci.org/Nedomas/databound)
-[![Dependency Status](https://gemnasium.com/Nedomas/databound.svg)](https://gemnasium.com/Nedomas/databound)
+[![Build Status](https://travis-ci.org/Nedomas/databound.svg?branch=master)](https://travis-ci.org/Nedomas/databound-rails)
+[![Dependency Status](https://gemnasium.com/Nedomas/databound.svg)](https://gemnasium.com/Nedomas/databound-rails)
 
 # Databound
 
 Exposes ActiveRecord records to the Javascript side.
 
-This is the **Ruby on Rails** backend part for the ``Databound.js`` lib.
+This is the **Ruby on Rails** backend part for the ``Databound`` javascript lib.
 
-For more information go to [Databound.js repo](https://github.com/Nedomas/databound.js).
+For more information go to [javascript Databound repo](https://github.com/Nedomas/databound).
 
 ## Javascript library
 
@@ -28,7 +28,7 @@ The library has two parts and has Lodash as a dependency.
 
 #### I. Javascript part
 
-Follow the guide on [Databound.js repo](https://github.com/Nedomas/databound.js).
+Follow the guide on [javascript Databound repo](https://github.com/Nedomas/databound).
 
 #### II. Ruby on Rails part
 
@@ -60,4 +60,4 @@ databound :users
 
 ## Additional features
 
-All features are described in [Databound.js repo](https://github.com/Nedomas/databound.js).
+All features are described in [javascript Databound repo](https://github.com/Nedomas/databound).
