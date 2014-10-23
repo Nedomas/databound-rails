@@ -29,11 +29,11 @@ module Databound
     end
 
     def dsl_block(key, val)
-      dsl_key(key).andand[val]
+      swallow_nil { dsl_key(key)[val] }
     end
 
     def dsl_key(key)
-      @controller.class.dsls.andand[key]
+      swallow_nil { @controller.class.dsls[key] }
     end
 
     def check_strict!(key, val)
@@ -45,7 +45,7 @@ module Databound
     end
 
     def strict?(key)
-      @controller.class.stricts.andand[key]
+      swallow_nil { @controller.class.stricts[key] }
     end
   end
 end

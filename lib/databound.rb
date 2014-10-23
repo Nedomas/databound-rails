@@ -1,5 +1,4 @@
-require 'andand'
-
+require 'databound/extensions'
 require 'databound/version'
 require 'databound/data'
 require 'databound/manager'
