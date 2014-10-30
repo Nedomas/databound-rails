@@ -17,7 +17,7 @@ module Databound
       end
     end
 
-    def find_scoped_records
+    def find_scoped_records(only_extra_scopes: false)
       records = []
       records << @scope.records(@model)
 
@@ -25,7 +25,11 @@ module Databound
         records << extra_scope.records(@model)
       end
 
-      records.map { |record| record.where(@data) }.flatten
+      if only_extra_scopes
+        records.flatten
+      else
+        records.map { |record| record.where(@data) }.flatten
+      end
     end
 
     def create_from_data

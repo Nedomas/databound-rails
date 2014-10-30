@@ -12,7 +12,6 @@ module Databound
 
   def where
     records = @crud.find_scoped_records
-
     render json: serialized(records)
   end
 
@@ -22,6 +21,7 @@ module Databound
     render json: {
       success: true,
       id: record.id,
+      scoped_records: serialized(scoped_records),
     }
   end
 
@@ -31,6 +31,7 @@ module Databound
     render json: {
       success: true,
       id: record.id,
+      scoped_records: serialized(scoped_records),
     }
   end
 
@@ -39,6 +40,7 @@ module Databound
 
     render json: {
       success: true,
+      scoped_records: serialized(scoped_records),
     }
   end
 
@@ -64,6 +66,10 @@ module Databound
 
   def init_crud
     @crud = Databound::Manager.new(self)
+  end
+
+  def scoped_records
+    @crud.find_scoped_records(only_extra_scopes: true)
   end
 
   module ClassMethods

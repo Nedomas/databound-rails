@@ -24,7 +24,7 @@ module Databound
         check_strict!(key, val)
 
         block = dsl_block(key, val)
-        obj[key] = block ? block.call(@params.to_options) : val
+        obj[key] = block ? @controller.instance_exec(@params.to_options, &block) : val
       end
     end
 
