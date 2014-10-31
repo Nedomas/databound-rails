@@ -54,6 +54,8 @@ module Databound
     private
 
     def check_params!
+      return if @permitted_columns == :all
+
       requested = [@scope, @data].map(&:to_h).flat_map(&:keys)
       unpermitted = requested - @permitted_columns.map(&:to_s)
       return if unpermitted.empty?

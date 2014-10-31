@@ -20,8 +20,8 @@ module Databound
 
     render json: {
       success: true,
-      id: record.id,
-      scoped_records: serialized(scoped_records),
+      id: serialize(record, :id),
+      scoped_records: serialize_array(scoped_records),
     }
   end
 
@@ -30,8 +30,8 @@ module Databound
 
     render json: {
       success: true,
-      id: record.id,
-      scoped_records: serialized(scoped_records),
+      id: serialize(record, :id),
+      scoped_records: serialize_array(scoped_records),
     }
   end
 
@@ -40,13 +40,13 @@ module Databound
 
     render json: {
       success: true,
-      scoped_records: serialized(scoped_records),
+      scoped_records: serialize_array(scoped_records),
     }
   end
 
   private
 
-  def serialized(records)
+  def serialize_array(records)
     return records unless defined?(ActiveModel::Serializer)
 
     serializer = ActiveModel::Serializer.serializer_for(records.first)
@@ -55,13 +55,29 @@ module Databound
     ActiveModel::ArraySerializer.new(records).to_json
   end
 
+  def serialize(record, attribute)
+    unserialized = record.send(attribute)
+    return unserialized unless defined?(ActiveModel::Serializer)
+
+    serializer = ActiveModel::Serializer.serializer_for(record)
+    return unserialized unless serializer
+
+    serializer.new(record).attributes[:id]
+  end
+
   def model
     raise 'Override model method to specify a model to be used in CRUD'
   end
 
   def permitted_columns
     # permit all by default
-    model.column_names
+    if model.ancestors.include?(Mongoid::Document)
+      model.fields.keys.map(&:to_sym)
+    elsif model.ancestors.include?(ActiveRecord::Base)
+      model.column_names
+    else
+      raise 'ORM not supported. Use ActiveRecord or Mongoid'
+    end
   end
 
   def init_crud
