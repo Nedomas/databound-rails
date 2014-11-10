@@ -12,7 +12,7 @@ module Databound
 
   def where
     records = @crud.find_scoped_records
-    render json: serialized(records)
+    render json: serialize_array(records)
   end
 
   def create
@@ -71,9 +71,9 @@ module Databound
 
   def permitted_columns
     # permit all by default
-    if model.ancestors.include?(Mongoid::Document)
+    if defined?(Moigoid) and model.ancestors.include?(Mongoid::Document)
       model.fields.keys.map(&:to_sym)
-    elsif model.ancestors.include?(ActiveRecord::Base)
+    elsif defined?(ActiveRecord) and model.ancestors.include?(ActiveRecord::Base)
       model.column_names
     else
       raise 'ORM not supported. Use ActiveRecord or Mongoid'
