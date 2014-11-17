@@ -71,13 +71,21 @@ module Databound
 
   def permitted_columns
     # permit all by default
-    if defined?(Moigoid) and model.ancestors.include?(Mongoid::Document)
+    if mongoid?
       model.fields.keys.map(&:to_sym)
-    elsif defined?(ActiveRecord) and model.ancestors.include?(ActiveRecord::Base)
+    elsif activerecord?
       model.column_names
     else
       raise 'ORM not supported. Use ActiveRecord or Mongoid'
     end
+  end
+
+  def mongoid?
+    defined?(Moigoid) and model.ancestors.include?(Mongoid::Document)
+  end
+
+  def activerecord?
+    defined?(ActiveRecord) and model.ancestors.include?(ActiveRecord::Base)
   end
 
   def init_crud

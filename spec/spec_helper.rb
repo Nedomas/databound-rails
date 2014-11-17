@@ -37,7 +37,7 @@ def convert_scoped_records(obj)
 
   converted = obj[:scoped_records].map do |record|
     record.except('created_at', 'updated_at')
-  end rescue binding.pry
+  end
 
   result[:scoped_records] = converted
   result

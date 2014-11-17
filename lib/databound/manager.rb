@@ -55,12 +55,14 @@ module Databound
 
     def check_params!
       return if @permitted_columns == :all
+      return if unpermitted_columns.empty?
 
+      raise NotPermittedError, "Request includes unpermitted columns: #{unpermitted_columns.join(', ')}"
+    end
+
+    def unpermitted_columns
       requested = [@scope, @data].map(&:to_h).flat_map(&:keys)
-      unpermitted = requested - @permitted_columns.map(&:to_s)
-      return if unpermitted.empty?
-
-      raise NotPermittedError, "Request includes unpermitted columns: #{unpermitted.join(', ')}"
+      requested - @permitted_columns.map(&:to_s)
     end
   end
 end
