@@ -5,15 +5,15 @@
 
 ![Databound](https://cloud.githubusercontent.com/assets/1877286/4743542/df89dcec-5a28-11e4-9114-6f383fe269cb.png)
 
-Exposes ActiveRecord records to the Javascript side.
+Exposes database ORM to the Javascript side.
 
-This is the **Ruby on Rails** backend part for the ``Databound`` javascript lib.
+Ruby on Rails backend for the Databound javascript lib. Supports ActiveRecord and Mongoid
 
 For more information go to [javascript Databound repo](https://github.com/Nedomas/databound).
 
 ## Javascript library
 
-It does something like this out of the box.
+Out of the box it does something like this.
 
 ```js
   User = new Databound('/users');

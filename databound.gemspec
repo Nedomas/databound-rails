@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Databound::VERSION
   spec.authors       = ['Domas Bitvinskas']
   spec.email         = ['domas.bitvinskas@me.com']
-  spec.summary       = %q{ActiveRecord exposed to the Javascript side and guarded by guns}
-  spec.description   = %q{This is the Ruby on Rails backend part for the Databound javascript lib.}
+  spec.summary       = %q{Exposes database ORM to the Javascript side}
+  spec.description   = %q{Ruby on Rails backend for the Databound javascript lib. Supports ActiveRecord and Mongoid}
   spec.homepage      = 'https://github.com/Nedomas/databound'
   spec.license       = 'MIT'
 
@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'combustion', '~> 0.5.2'
   spec.add_development_dependency 'rails'
   spec.add_development_dependency 'sqlite3'
-
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'pry-stack_explorer'
   spec.add_development_dependency 'bundler', '~> 1.6'
