@@ -15,7 +15,11 @@ describe UsersController, type: :controller do
     end
 
     it 'responds consistently to js' do
-      expect(rubize(response)).to eq(success: true, id: 1)
+      expect(rubize(response)).to eq(
+        success: true,
+        id: 1,
+        scoped_records: all_records,
+      )
     end
 
     it 'creates the record' do
@@ -79,7 +83,11 @@ describe UsersController, type: :controller do
       end
 
       it 'respond with updated record id' do
-        expect(rubize(response)).to eq(success: true, id: @user.id)
+        expect(rubize(response)).to eq(
+          success: true,
+          id: @user.id,
+          scoped_records: all_records,
+        )
       end
 
       it 'do the update' do
@@ -119,7 +127,10 @@ describe UsersController, type: :controller do
       end
 
       it 'respond with success' do
-        expect(rubize(response)).to eq(success: true)
+        expect(rubize(response)).to eq(
+          success: true,
+          scoped_records: all_records,
+        )
       end
     end
 

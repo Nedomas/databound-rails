@@ -19,7 +19,7 @@ def javascriptize(ruby_obj)
 end
 
 def rubize(response)
-  optionize(JSON.parse(response.body))
+  convert_scoped_records(optionize(JSON.parse(response.body)))
 end
 
 def optionize(obj)
@@ -31,6 +31,22 @@ def optionize(obj)
   end
 end
 
+def convert_scoped_records(obj)
+  return obj unless obj.is_a?(Hash)
+  result = obj
+
+  converted = obj[:scoped_records].map do |record|
+    record.except('created_at', 'updated_at')
+  end rescue binding.pry
+
+  result[:scoped_records] = converted
+  result
+end
+
 def gather(attribute, response)
   rubize(response).map { |record| record[attribute] }
+end
+
+def all_records
+  User.select(:id, :name, :city).map(&:attributes)
 end
