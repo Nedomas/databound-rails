@@ -46,6 +46,6 @@ def gather(attribute, response)
   rubize(response).map { |record| record[attribute] }
 end
 
-def all_records
-  User.select(:id, :name, :city).map(&:attributes)
+def all_records(model = User)
+  model.select(:id, :name, :city).map(&:attributes)
 end
