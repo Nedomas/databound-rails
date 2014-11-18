@@ -47,7 +47,7 @@ module Databound
   private
 
   def serialize_array(records)
-    return records unless defined?(ActiveModel::Serializer)
+    return records.to_json unless defined?(ActiveModel::Serializer)
 
     serializer = ActiveModel::Serializer.serializer_for(records.first)
     return records unless serializer
@@ -57,7 +57,7 @@ module Databound
 
   def serialize(record, attribute)
     unserialized = record.send(attribute)
-    return unserialized unless defined?(ActiveModel::Serializer)
+    return unserialized.to_json unless defined?(ActiveModel::Serializer)
 
     serializer = ActiveModel::Serializer.serializer_for(record)
     return unserialized unless serializer
