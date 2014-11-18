@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'bundler/setup'
-
 require 'combustion'
 
 Combustion.initialize! :all
@@ -35,7 +34,7 @@ def convert_scoped_records(obj)
   return obj unless obj.is_a?(Hash)
   result = obj
 
-  converted = obj[:scoped_records].map do |record|
+  converted = JSON.parse(obj[:scoped_records]).map do |record|
     record.except('created_at', 'updated_at')
   end
 

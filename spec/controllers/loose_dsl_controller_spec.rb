@@ -18,7 +18,7 @@ describe LooseDslController, type: :controller do
     it 'responds consistently to js' do
       expect(rubize(response)).to eq(
         success: true,
-        id: 1,
+        id: '1',
         scoped_records: all_records,
       )
     end
@@ -52,7 +52,7 @@ describe LooseDslController, type: :controller do
     it 'responds consistently to js' do
       expect(rubize(response)).to eq(
         success: true,
-        id: 1,
+        id: '1',
         scoped_records: all_records,
       )
     end
@@ -88,7 +88,7 @@ describe LooseDslController, type: :controller do
     it 'responds consistently to js' do
       expect(rubize(response)).to eq(
         success: true,
-        id: 1,
+        id: '1',
         scoped_records: all_records,
       )
     end
@@ -124,7 +124,7 @@ describe LooseDslController, type: :controller do
     it 'responds consistently to js' do
       expect(rubize(response)).to eq(
         success: true,
-        id: 1,
+        id: '1',
         scoped_records: all_records,
       )
     end

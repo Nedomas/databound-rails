@@ -17,7 +17,7 @@ describe UsersController, type: :controller do
     it 'responds consistently to js' do
       expect(rubize(response)).to eq(
         success: true,
-        id: 1,
+        id: '1',
         scoped_records: all_records,
       )
     end
@@ -85,7 +85,7 @@ describe UsersController, type: :controller do
       it 'respond with updated record id' do
         expect(rubize(response)).to eq(
           success: true,
-          id: @user.id,
+          id: @user.id.to_s,
           scoped_records: all_records,
         )
       end
