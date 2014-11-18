@@ -4,7 +4,7 @@ module Databound
       return if exists?(path)
 
       controller = Class.new(ApplicationController)
-      controller.include(Databound)
+      controller.send(:include, Databound)
       controller.send(:define_method, :model) do
         resource.to_s.classify.constantize
       end
