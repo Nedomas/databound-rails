@@ -8,7 +8,6 @@ describe UsersController, type: :controller do
           name: 'John',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       post(:create, javascriptize(data))
@@ -42,7 +41,6 @@ describe UsersController, type: :controller do
           city: 'Los Angeles',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       post(:where, javascriptize(data))
@@ -55,7 +53,6 @@ describe UsersController, type: :controller do
           city: 'New York',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       post(:where, javascriptize(data))
@@ -76,7 +73,6 @@ describe UsersController, type: :controller do
             city: 'Moved to Los Angeles',
           },
           scope: {},
-          extra_find_scopes: [],
         }
 
         post(:update, javascriptize(data))
@@ -101,7 +97,6 @@ describe UsersController, type: :controller do
           city: 'Moved to Los Angeles',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       expect { post(:update, javascriptize(data)) }.to raise_error(ActiveRecord::RecordNotFound)
@@ -120,7 +115,6 @@ describe UsersController, type: :controller do
             id: @user.id,
           },
           scope: {},
-          extra_find_scopes: [],
         }
 
         post(:destroy, javascriptize(data))
@@ -140,7 +134,6 @@ describe UsersController, type: :controller do
           id: 2,
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       expect { post(:update, javascriptize(data)) }.to raise_error(ActiveRecord::RecordNotFound)

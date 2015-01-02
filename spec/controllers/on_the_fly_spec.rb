@@ -9,7 +9,6 @@ describe MessagesController, type: :controller do
           city: 'Prague',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       post(:create, javascriptize(data))

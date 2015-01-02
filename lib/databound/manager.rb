@@ -7,12 +7,12 @@ module Databound
 
       scope_js = controller.params[:scope]
       data_js = controller.params[:data]
-      extra_find_scopes_js = controller.params[:extra_find_scopes] || '[]'
+      extra_where_scopes_js = controller.params[:extra_where_scopes] || '[]'
 
       @scope = Databound::Data.new(controller, scope_js)
       @data = Databound::Data.new(controller, data_js).to_h
 
-      @extra_find_scopes = JSON.parse(extra_find_scopes_js).map do |extra_scope|
+      @extra_where_scopes = JSON.parse(extra_where_scopes_js).map do |extra_scope|
         Databound::Data.new(controller, extra_scope)
       end
     end
@@ -21,7 +21,7 @@ module Databound
       records = []
       records << @scope.records(@model)
 
-      @extra_find_scopes.each do |extra_scope|
+      @extra_where_scopes.each do |extra_scope|
         records << extra_scope.records(@model)
       end
 

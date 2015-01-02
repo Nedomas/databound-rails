@@ -8,7 +8,6 @@ describe PermittedColumnsController, type: :controller do
           city: 'Barcelona',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       expect { post(:create, javascriptize(data)) }.to raise_error(
@@ -23,7 +22,6 @@ describe PermittedColumnsController, type: :controller do
           name: 'Nikki',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       expect { post(:create, javascriptize(data)) }.not_to raise_error
@@ -42,7 +40,6 @@ describe PermittedColumnsController, type: :controller do
           city: 'Barcelona',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       expect { post(:update, javascriptize(data)) }.to raise_error(
@@ -58,7 +55,6 @@ describe PermittedColumnsController, type: :controller do
           name: 'Nikki',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       expect { post(:update, javascriptize(data)) }.not_to raise_error
@@ -73,7 +69,6 @@ describe PermittedColumnsController, type: :controller do
             name: 'Nikki',
           },
           scope: { city: 'Barcelona' },
-          extra_find_scopes: [],
         }
 
         expect { post(:create, javascriptize(data)) }.to raise_error(
@@ -91,7 +86,6 @@ describe PermittedColumnsController, type: :controller do
             name: 'Nikki',
           },
           scope: { city: 'Barcelona' },
-          extra_find_scopes: [],
         }
 
         expect { post(:update, javascriptize(data)) }.to raise_error(

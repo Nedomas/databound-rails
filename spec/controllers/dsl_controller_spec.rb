@@ -11,7 +11,6 @@ describe DslController, type: :controller do
               city: 'hottest',
             },
             scope: {},
-            extra_find_scopes: [],
           }
 
           post(:create, javascriptize(data))
@@ -45,7 +44,6 @@ describe DslController, type: :controller do
               city: 'coldest',
             },
             scope: {},
-            extra_find_scopes: [],
           }
 
           post(:create, javascriptize(data))
@@ -80,7 +78,6 @@ describe DslController, type: :controller do
             city: 'New York',
           },
           scope: {},
-          extra_find_scopes: [],
         }
 
         expect { post(:create, javascriptize(data)) }.to raise_error(
@@ -104,7 +101,6 @@ describe DslController, type: :controller do
               city: 'hottest',
             },
             scope: {},
-            extra_find_scopes: [],
           }
 
           post(:update, javascriptize(data))
@@ -141,7 +137,6 @@ describe DslController, type: :controller do
               city: 'coldest',
             },
             scope: {},
-            extra_find_scopes: [],
           }
 
           post(:update, javascriptize(data))
@@ -179,7 +174,6 @@ describe DslController, type: :controller do
             city: 'New York',
           },
           scope: {},
-          extra_find_scopes: [],
         }
 
         expect { post(:create, javascriptize(data)) }.to raise_error(

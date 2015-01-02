@@ -9,7 +9,6 @@ describe LooseDslController, type: :controller do
           city: 'hottest',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       post(:create, javascriptize(data))
@@ -43,7 +42,6 @@ describe LooseDslController, type: :controller do
           city: 'New York',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       post(:create, javascriptize(data))
@@ -79,7 +77,6 @@ describe LooseDslController, type: :controller do
           city: 'hottest',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       post(:update, javascriptize(data))
@@ -115,7 +112,6 @@ describe LooseDslController, type: :controller do
           city: 'Los Angeles',
         },
         scope: {},
-        extra_find_scopes: [],
       }
 
       post(:update, javascriptize(data))
