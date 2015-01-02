@@ -9,12 +9,12 @@ module Databound
         resource.to_s.classify.constantize
       end
 
-      Object.const_set(name(path), controller)
+      Object.const_set(controller_name(path), controller)
     end
 
     def self.exists?(path)
       begin
-        name(path).constantize
+        controller_name(path).constantize
       rescue NameError
         return false
       end
@@ -22,7 +22,7 @@ module Databound
       true
     end
 
-    def self.name(path)
+    def self.controller_name(path)
       "#{path.camelize}Controller"
     end
   end
