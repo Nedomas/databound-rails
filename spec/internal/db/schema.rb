@@ -10,4 +10,10 @@ ActiveRecord::Schema.define do
     t.string :city
     t.timestamps
   end
+
+  create_table(:projects, force: true) do |t|
+    t.string :city
+    t.integer :user_id
+    t.timestamps
+  end
 end

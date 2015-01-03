@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   databound :dsl
   databound :loose_dsl
   databound :messages
+  databound :permit_update_destroy
 end

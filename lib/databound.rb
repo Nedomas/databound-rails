@@ -100,6 +100,7 @@ module Databound
   module ClassMethods
     attr_reader :dsls
     attr_reader :stricts
+    attr_reader :permit_update_destroy
 
     def dsl(name, value, strict: true, &block)
       @stricts ||= {}
@@ -108,6 +109,10 @@ module Databound
       @dsls ||= {}
       @dsls[name.to_s] ||= {}
       @dsls[name.to_s][value.to_s] = block
+    end
+
+    def permit_update_destroy?(&block)
+      @permit_update_destroy = block
     end
   end
 end

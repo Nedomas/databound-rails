@@ -2,12 +2,8 @@ module Databound
   class NotPermittedError < RuntimeError; end
   class Manager
     def initialize(controller)
-      @model = controller.send(:model)
-      @permitted_columns = controller.send(:permitted_columns)
-
-      scope_js = controller.params[:scope]
-      data_js = controller.params[:data]
-      extra_where_scopes_js = controller.params[:extra_where_scopes] || '[]'
+      @controller = controller
+      @model = @controller.send(:model)
 
       @scope = Databound::Data.new(controller, scope_js)
       @data = Databound::Data.new(controller, data_js).to_h
@@ -42,27 +38,57 @@ module Databound
 
       check_params!
       record = @model.find(id)
+      check_permit_update_destroy!(record)
       record.update(@data)
 
       record
     end
 
     def destroy_from_data
-      @model.find(@data['id']).destroy
+      record = @model.find(@data['id'])
+      check_permit_update_destroy!(record)
+      record.destroy
     end
 
     private
 
     def check_params!
-      return if @permitted_columns == :all
+      return if permitted_columns == :all
       return if unpermitted_columns.empty?
 
       raise NotPermittedError, "Request includes unpermitted columns: #{unpermitted_columns.join(', ')}"
     end
 
+    def check_permit_update_destroy!(record)
+      return unless permit_update_destroy_block
+      return if permit_update_destroy_block.call(record)
+
+      raise NotPermittedError, 'Request for update or destroy not permitted'
+    end
+
+    def permit_update_destroy_block
+      @controller.class.permit_update_destroy
+    end
+
     def unpermitted_columns
       requested = [@scope, @data].map(&:to_h).flat_map(&:keys)
-      requested - @permitted_columns.map(&:to_s)
+      requested - permitted_columns.map(&:to_s)
+    end
+
+    def permitted_columns
+      @controller.send(:permitted_columns)
+    end
+
+    def scope_js
+      @controller.params[:scope]
+    end
+
+    def data_js
+      @controller.params[:data]
+    end
+
+    def extra_where_scopes_js
+      @controller.params[:extra_where_scopes] || '[]'
     end
   end
 end
