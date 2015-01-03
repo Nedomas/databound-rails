@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Databound::VERSION
   spec.authors       = ['Domas Bitvinskas']
   spec.email         = ['domas.bitvinskas@me.com']
-  spec.summary       = %q{Exposes database ORM to the Javascript side}
-  spec.description   = %q{Ruby on Rails backend for the Databound javascript lib. Supports ActiveRecord and Mongoid}
+  spec.summary       = %q{Databound exposes Ruby on Rails database to the Javascript side}
+  spec.description   = %q{Works with ActiveRecord and Mongoid out of the box}
   spec.homepage      = 'https://github.com/Nedomas/databound'
   spec.license       = 'MIT'
 

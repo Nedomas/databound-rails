@@ -11,7 +11,8 @@ Exposes Ruby on Rails database to the Javascript side.
 This repo is for Ruby on Rails backend part of Databound.
 
 **Check out live examples on the Databound website** [databound.me](http://databound.me).
-**For more information on the library check out** [javascript Databound repo](https://github.com/Nedomas/databound).
+
+**You can also check out the javascript** [Databound repo](https://github.com/Nedomas/databound).
 
 ## Usage
 
