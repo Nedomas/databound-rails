@@ -8,7 +8,7 @@ module Databound
 
       def add_assets
         js_manifest = 'app/assets/javascripts/application.js'
-        coffee_manifest = 'app/assets/javascripts/application.coffee'
+        coffee_manifest = 'app/assets/javascripts/application.js.coffee'
 
         if File.exist?(js_manifest)
           insert_into_file js_manifest, "//= require databound\n", after: "jquery_ujs\n"
@@ -20,7 +20,7 @@ module Databound
       end
 
       def add_databound
-        copy_file 'js/dist/databound-standalone.js', 'vendor/assets/javascripts/databound.js'
+        copy_file 'databound-standalone.js', 'vendor/assets/javascripts/databound.js'
       end
     end
   end

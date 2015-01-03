@@ -1,3 +1,0 @@
-[submodule "lib/generators/databound/install/templates/js"]
-	path = lib/generators/databound/install/templates/js
-	url = https://github.com/Nedomas/databound.git
