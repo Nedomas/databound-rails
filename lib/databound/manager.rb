@@ -76,7 +76,39 @@ module Databound
     end
 
     def permitted_columns
-      @controller.send(:permitted_columns)
+      columns = @controller.send(:permitted_columns)
+
+      case columns
+      when :all
+        :all
+      when :table_columns
+        table_columns
+      else
+        columns
+      end
+    end
+
+    def table_columns
+      # permit all by default
+      if mongoid?
+        model.fields.keys.map(&:to_sym)
+      elsif activerecord?
+        model.column_names
+      else
+        raise 'ORM not supported. Use ActiveRecord or Mongoid'
+      end
+    end
+
+    def mongoid?
+      defined?(Moigoid) and model.ancestors.include?(Mongoid::Document)
+    end
+
+    def activerecord?
+      defined?(ActiveRecord) and model.ancestors.include?(ActiveRecord::Base)
+    end
+
+    def model
+      @controller.send(:model)
     end
 
     def scope_js

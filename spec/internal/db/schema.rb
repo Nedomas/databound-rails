@@ -16,4 +16,10 @@ ActiveRecord::Schema.define do
     t.integer :user_id
     t.timestamps
   end
+
+  create_table(:posts, force: true) do |t|
+    t.string :title
+    t.string :description
+    t.timestamps
+  end
 end

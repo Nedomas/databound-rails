@@ -1,12 +1,15 @@
 module Databound
   class Utils
-    def self.create_controller_unless_exists(path, resource)
+    def self.create_controller_unless_exists(path, resource, opts)
       return if exists?(path)
 
       controller = Class.new(ApplicationController)
       controller.send(:include, Databound)
       controller.send(:define_method, :model) do
         resource.to_s.classify.constantize
+      end
+      controller.send(:define_method, :permitted_columns) do
+        opts[:permitted_columns]
       end
 
       Object.const_set(controller_name(path), controller)

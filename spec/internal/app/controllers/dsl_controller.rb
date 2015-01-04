@@ -7,6 +7,10 @@ class DslController < ApplicationController
     User
   end
 
+  def permitted_columns
+    %i(name city)
+  end
+
   dsl(:city, :hottest) do
     'Miami'
   end

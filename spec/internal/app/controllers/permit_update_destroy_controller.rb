@@ -3,6 +3,10 @@ class PermitUpdateDestroyController < ApplicationController
 
   private
 
+  def permitted_columns
+    %i(name city)
+  end
+
   def model
     Project
   end
