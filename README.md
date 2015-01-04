@@ -6,7 +6,7 @@
 
 ![Databound](https://cloud.githubusercontent.com/assets/1877286/4743542/df89dcec-5a28-11e4-9114-6f383fe269cb.png)
 
-Exposes Ruby on Rails database to the Javascript side.
+Provides Javascript a simple CRUD API to the Ruby on Rails backend.
 
 This repo is for Ruby on Rails backend part of Databound.
 
