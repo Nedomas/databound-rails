@@ -84,7 +84,7 @@ module Databound
       when :table_columns
         table_columns
       else
-        columns
+        Array(columns)
       end
     end
 
