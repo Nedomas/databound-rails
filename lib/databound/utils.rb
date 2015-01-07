@@ -24,11 +24,11 @@ module Databound
 
     def dsl(name, value, strict: true, &block)
       @stricts ||= {}
-      @stricts[name.to_s] = strict
+      @stricts[name] = strict
 
       @dsls ||= {}
-      @dsls[name.to_s] ||= {}
-      @dsls[name.to_s][value.to_s] = block
+      @dsls[name] ||= {}
+      @dsls[name][value.to_s] = block
     end
 
     def read(name)
