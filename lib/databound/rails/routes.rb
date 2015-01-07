@@ -3,6 +3,7 @@ class ActionDispatch::Routing::Mapper
     namespace = @scope[:path]
     namespace = namespace[1..-1] if namespace
     opts = resources.pop if resources.last.is_a?(Hash)
+    Databound::Utils.databound_to_application_controller!
 
     resources.each do |resource|
       Rails.application.routes.draw do

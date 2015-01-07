@@ -33,7 +33,7 @@ module Databound
     end
 
     def dsl_key(key)
-      swallow_nil { @controller.class.dsls[key] }
+      swallow_nil { @controller.databound_config.read(:dsls)[key] }
     end
 
     def check_strict!(key, val)
@@ -45,7 +45,7 @@ module Databound
     end
 
     def strict?(key)
-      swallow_nil { @controller.class.stricts[key] }
+      swallow_nil { @controller.databound_config.read(:stricts)[key] }
     end
   end
 end
