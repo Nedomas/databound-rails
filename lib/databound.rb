@@ -2,7 +2,8 @@ require 'databound/extensions'
 require 'databound/version'
 require 'databound/data'
 require 'databound/manager'
-require 'databound/utils'
+require 'databound/config'
+require 'databound/controller'
 require 'databound/rails/routes'
 
 module Databound

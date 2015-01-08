@@ -127,6 +127,7 @@ module Databound
 
     def model
       raise 'No model specified' unless model_name
+
       model_name.to_s.camelize.constantize
     end
 
