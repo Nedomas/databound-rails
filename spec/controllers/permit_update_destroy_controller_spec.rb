@@ -20,7 +20,7 @@ describe PermitUpdateDestroyController, type: :controller do
 
       expect { post(:update, javascriptize(data)) }.to raise_error(
         Databound::NotPermittedError,
-        'Request for update or destroy not permitted',
+        'Request for update not permitted',
       )
     end
 
@@ -48,7 +48,7 @@ describe PermitUpdateDestroyController, type: :controller do
 
       expect { post(:destroy, javascriptize(data)) }.to raise_error(
         Databound::NotPermittedError,
-        'Request for update or destroy not permitted',
+        'Request for destroy not permitted',
       )
     end
 

@@ -1,13 +1,6 @@
 class PermittedColumnsController < ApplicationController
-  include Databound
-
-  private
-
-  def model
-    User
-  end
-
-  def permitted_columns
-    %i(name)
+  databound do
+    model :user
+    columns :name
   end
 end

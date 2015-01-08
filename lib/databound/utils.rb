@@ -48,35 +48,35 @@ module Databound
     end
 
     def self.create_controller_unless_exists(path, resource, opts)
-      return
       return if exists?(path)
       opts ||= {}
+      model_name = opts.delete(:model) || fallback_model(resource)
 
       controller = Class.new(ApplicationController)
-      controller.send(:include, Databound)
-      controller.send(:define_method, :model) do
-        resource.to_s.classify.constantize
-      end
-
-      controller.send(:define_method, :permitted_columns) do
-        opts.fetch(:permitted_columns) do
-          raise 'Specify permitted_columns in routes or the controller'
+      controller.send(:databound) do
+        opts.each do |name, value|
+          model model_name
+          send(name, *value)
         end
       end
 
       Object.const_set(controller_name(path), controller)
     end
 
+    def self.fallback_model(resource)
+      resource.to_s.classify.underscore
+    end
+
     def self.exists?(path)
-      error = false
+      name_error = false
 
       begin
         controller_name(path).constantize
       rescue NameError
-        error = true
+        name_error = true
       end
 
-      error
+      !name_error
     end
 
     def self.controller_name(path)

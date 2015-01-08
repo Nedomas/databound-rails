@@ -1,17 +1,8 @@
 class LooseDslController < ApplicationController
-  include Databound
+  databound do
+    model :user
+    columns :name, :city
 
-  private
-
-  def permitted_columns
-    %i(name city)
-  end
-
-  def model
-    User
-  end
-
-  dsl(:city, :hottest, strict: false) do
-    'Miami'
+    dsl(:city, :hottest, strict: false) { 'Miami' }
   end
 end

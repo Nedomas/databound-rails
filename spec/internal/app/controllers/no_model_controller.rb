@@ -1,3 +1,4 @@
 class NoModelController < ApplicationController
-  include Databound
+  databound do
+  end
 end

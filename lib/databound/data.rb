@@ -1,15 +1,16 @@
 module Databound
   class Data
-    def initialize(controller, json)
+    def initialize(controller, json, model)
       return unless json
 
       @controller = controller
       @json = json
       @data = interpolated_params
+      @model = model
     end
 
-    def records(model)
-      model.where(@data)
+    def records
+      @model.where(@data)
     end
 
     def to_h

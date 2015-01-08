@@ -4,35 +4,35 @@ module Databound
     def initialize(controller)
       @controller = controller
 
-      @scope = Databound::Data.new(@controller, scope_js)
-      @data = Databound::Data.new(@controller, data_js).to_h
+      @scope = Databound::Data.new(@controller, scope_js, model)
+      @data = Databound::Data.new(@controller, data_js, model).to_h
 
       @extra_where_scopes = JSON.parse(extra_where_scopes_js).map do |extra_scope|
-        Databound::Data.new(@controller, extra_scope)
+        Databound::Data.new(@controller, extra_scope, model)
       end
     end
 
     def find_scoped_records(only_extra_scopes: false)
-      records = []
-      records << @scope.records(model)
+      check_params!(:read) unless only_extra_scopes
 
-      @extra_where_scopes.each do |extra_scope|
-        records << extra_scope.records(model)
+      nodes = [@scope, *@extra_where_scopes].map do |scope|
+        model.where(scope.to_h).where_values.reduce(:and)
       end
 
-      result = if only_extra_scopes
-        records.flatten
-      else
-        records.map { |record| record.where(@data) }.flatten
+      query = nodes[1..-1].reduce(nodes.first) do |memo, node|
+        node.or(memo)
       end
 
-      check_permit!(:read, params, result)
-      result
+      records = model.where(query)
+      records = filter_by_params!(records) unless only_extra_scopes
+
+      check_permit!(:read, params, records)
+      records
     end
 
     def create_from_data
-      check_params!
-      record = model.where(@scope.to_h).new(@data)
+      check_params!(:create)
+      record = model.new(params.to_h)
       check_permit!(:create, params, record)
 
       record.save
@@ -40,25 +40,27 @@ module Databound
     end
 
     def update_from_data
-      id = @data.delete('id')
+      attributes = params.to_h
+      id = attributes.delete(:id)
 
-      check_params!
+      check_params!(:update)
       record = model.find(id)
       check_permit!(:update, params, record)
 
-      record.update(@data)
+      record.update(attributes)
       record
     end
 
     def destroy_from_data
-      record = model.find(@data['id'])
+      record = model.find(params.id)
       check_permit!(:destroy, params, record)
       record.destroy
     end
 
     private
 
-    def check_params!
+    def check_params!(action)
+      @action = action
       return if columns == :all
       return if unpermitted_columns.empty?
 
@@ -80,20 +82,24 @@ module Databound
     end
 
     def unpermitted_columns
-      params.to_h.keys - columns
+      params.to_h.keys - columns - allowed_action_columns
     end
 
     def params
       OpenStruct.new(@scope.to_h.merge(@data))
     end
 
+    def allowed_action_columns
+      @action == :update ? [:id] : []
+    end
+
     def columns
       result = @controller.databound_config.read(:columns)
 
       case result
-      when :all
+      when [:all]
         :all
-      when :table_columns
+      when [:table_columns]
         table_columns
       else
         Array(result)
@@ -105,7 +111,7 @@ module Databound
       if mongoid?
         model.fields.keys.map(&:to_sym)
       elsif activerecord?
-        model.column_names
+        model.column_names.map(&:to_sym)
       else
         raise 'ORM not supported. Use ActiveRecord or Mongoid'
       end
@@ -120,7 +126,12 @@ module Databound
     end
 
     def model
-      @controller.databound_config.read(:model).to_s.camelize.constantize
+      raise 'No model specified' unless model_name
+      model_name.to_s.camelize.constantize
+    end
+
+    def model_name
+      @controller.databound_config.read(:model)
     end
 
     def scope_js
@@ -133,6 +144,14 @@ module Databound
 
     def extra_where_scopes_js
       @controller.params[:extra_where_scopes] || '[]'
+    end
+
+    def extra_scope_records
+      @extra_where_scopes.flat_map(&:records)
+    end
+
+    def filter_by_params!(records)
+      records.where(params.to_h)
     end
   end
 end

@@ -1,21 +1,11 @@
 class DslController < ApplicationController
-  include Databound
+  databound do
+    model :user
+    columns :name, :city
 
-  private
-
-  def model
-    User
-  end
-
-  def permitted_columns
-    %i(name city)
-  end
-
-  dsl(:city, :hottest) do
-    'Miami'
-  end
-
-  dsl(:city, :coldest) do |params|
-    "Where #{params[:name]} lives"
+    dsl(:city, :hottest) { 'Miami' }
+    dsl(:city, :coldest) do |params|
+      "Where #{params.name} lives"
+    end
   end
 end
