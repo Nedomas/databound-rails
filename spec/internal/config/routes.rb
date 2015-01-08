@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   databound :users
   databound :no_model
-  databound :permitted_columns
+  databound :columns
   databound :dsl
   databound :loose_dsl
-  databound :messages, permitted_columns: :table_columns
-  databound :permit_update_destroy
-  databound :posts, permitted_columns: %i(title)
+  databound :messages, columns: :table_columns
+  databound :permit
+  databound :posts, columns: %i(title)
+  databound :projects, columns: %i(city user_id), model: :user
 end

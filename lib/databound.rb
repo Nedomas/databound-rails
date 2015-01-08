@@ -2,13 +2,13 @@ require 'databound/extensions'
 require 'databound/version'
 require 'databound/data'
 require 'databound/manager'
-require 'databound/utils'
+require 'databound/config'
+require 'databound/controller'
 require 'databound/rails/routes'
 
 module Databound
   def self.included(base)
     base.send(:before_action, :init_crud, only: %i(where create update destroy))
-    base.extend(ClassMethods)
   end
 
   def where
@@ -66,38 +66,11 @@ module Databound
     serializer.new(record).attributes[:id]
   end
 
-  def model
-    raise 'Override model method to specify a model to be used in CRUD'
-  end
-
-  def permitted_columns
-    []
-  end
-
   def init_crud
     @crud = Databound::Manager.new(self)
   end
 
   def scoped_records
     @crud.find_scoped_records(only_extra_scopes: true)
-  end
-
-  module ClassMethods
-    attr_reader :dsls
-    attr_reader :stricts
-    attr_reader :permit_update_destroy
-
-    def dsl(name, value, strict: true, &block)
-      @stricts ||= {}
-      @stricts[name.to_s] = strict
-
-      @dsls ||= {}
-      @dsls[name.to_s] ||= {}
-      @dsls[name.to_s][value.to_s] = block
-    end
-
-    def permit_update_destroy?(&block)
-      @permit_update_destroy = block
-    end
   end
 end
