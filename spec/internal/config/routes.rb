@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   databound :messages, columns: :table_columns
   databound :permit
   databound :posts, columns: %i(title)
+  databound :projects, columns: %i(city user_id), model: :user
 end
