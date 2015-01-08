@@ -13,8 +13,6 @@ module Databound
     end
 
     def find_scoped_records(only_extra_scopes: false)
-      check_params!(:read) unless only_extra_scopes
-
       records = model.where(or_query(@scope, *@extra_where_scopes))
       records = filter_by_params!(records) unless only_extra_scopes
 
