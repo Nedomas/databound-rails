@@ -1,16 +1,6 @@
 module Databound
   class Controller
     class << self
-      def add_application_controller_configs!
-        def ApplicationController.databound(model = nil, &block)
-          include Databound
-
-          send(:define_method, :databound_config) do
-            Databound::Config.new(block, model)
-          end
-        end
-      end
-
       def find_or_create(name, resource, opts)
         find(name) || create(name, resource, opts)
       end

@@ -1,3 +1,5 @@
+require 'databound/initializer'
+require 'databound/railtie'
 require 'databound/extensions'
 require 'databound/version'
 require 'databound/data'
