@@ -71,6 +71,7 @@ module Databound
   end
 
   def scoped_records
-    @crud.find_scoped_records(only_extra_scopes: true)
+    records = @crud.find_scoped_records(only_extra_scopes: true)
+    @crud.action_allowed?(:read, records) ? records : []
   end
 end

@@ -14,16 +14,19 @@ module Databound
 
     def find_scoped_records(only_extra_scopes: false)
       records = model.where(or_query(@scope, *@extra_where_scopes))
-      records = filter_by_params!(records) unless only_extra_scopes
 
-      check_permit!(:read, params, records)
+      unless only_extra_scopes
+        records = filter_by_params!(records)
+        check_permit!(:read, records)
+      end
+
       records
     end
 
     def create_from_data
       check_params!(:create)
       record = model.new(params.to_h)
-      check_permit!(:create, params, record)
+      check_permit!(:create, record)
 
       record.save
       record
@@ -35,7 +38,7 @@ module Databound
 
       check_params!(:update)
       record = model.find(id)
-      check_permit!(:update, params, record)
+      check_permit!(:update, record)
 
       record.update(attributes)
       record
@@ -43,8 +46,16 @@ module Databound
 
     def destroy_from_data
       record = model.find(params.id)
-      check_permit!(:destroy, params, record)
+      check_permit!(:destroy, record)
       record.destroy
+    end
+
+    def action_allowed?(method, record)
+      permit_checks = @controller.databound_config.read(:permit)
+      check = permit_checks[method]
+      return true unless check
+
+      @controller.instance_exec(params, record, &check)
     end
 
     private
@@ -67,12 +78,8 @@ module Databound
       raise NotPermittedError, "Request includes unpermitted columns: #{unpermitted_columns.join(', ')}"
     end
 
-    def check_permit!(method, params, record = nil)
-      permit_checks = @controller.databound_config.read(:permit)
-      check = permit_checks[method]
-
-      return unless check
-      return if @controller.instance_exec(params, record, &check)
+    def check_permit!(method, record)
+      return if action_allowed?(method, record)
 
       raise NotPermittedError, "Request for #{method} not permitted"
     end
