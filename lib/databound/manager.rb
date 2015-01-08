@@ -5,7 +5,7 @@ module Databound
       @controller = controller
 
       @scope = Databound::Data.new(@controller, scope_js, model)
-      @data = Databound::Data.new(@controller, data_js, model).to_h
+      @data = Databound::Data.new(@controller, data_js, model)
 
       @extra_where_scopes = JSON.parse(extra_where_scopes_js).map do |extra_scope|
         Databound::Data.new(@controller, extra_scope, model)
@@ -15,15 +15,7 @@ module Databound
     def find_scoped_records(only_extra_scopes: false)
       check_params!(:read) unless only_extra_scopes
 
-      nodes = [@scope, *@extra_where_scopes].map do |scope|
-        model.where(scope.to_h).where_values.reduce(:and)
-      end
-
-      query = nodes[1..-1].reduce(nodes.first) do |memo, node|
-        node.or(memo)
-      end
-
-      records = model.where(query)
+      records = model.where(or_query(@scope, *@extra_where_scopes))
       records = filter_by_params!(records) unless only_extra_scopes
 
       check_permit!(:read, params, records)
@@ -59,6 +51,16 @@ module Databound
 
     private
 
+    def or_query(*scopes)
+      nodes = scopes.map do |scope|
+        model.where(scope.to_h).where_values.reduce(:and)
+      end
+
+      nodes[1..-1].reduce(nodes.first) do |memo, node|
+        node.or(memo)
+      end
+    end
+
     def check_params!(action)
       @action = action
       return if columns == :all
@@ -86,7 +88,7 @@ module Databound
     end
 
     def params
-      OpenStruct.new(@scope.to_h.merge(@data))
+      OpenStruct.new(@scope.to_h.merge(@data.to_h))
     end
 
     def allowed_action_columns
