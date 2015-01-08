@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PermittedColumnsController, type: :controller do
+describe ColumnsController, type: :controller do
   describe '#create' do
     it 'raise when param is not permitted' do
       data = {

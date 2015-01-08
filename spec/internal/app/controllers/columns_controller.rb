@@ -1,4 +1,4 @@
-class PermittedColumnsController < ApplicationController
+class ColumnsController < ApplicationController
   databound do
     model :user
     columns :name

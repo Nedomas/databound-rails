@@ -17,7 +17,10 @@ module Databound
 
       def create(name, resource, opts)
         opts ||= {}
+        Object.const_set(as_constant_string(name), new(resource, opts))
+      end
 
+      def new(resource, opts)
         model_name = opts.delete(:model) || fallback_model(resource)
 
         result = Class.new(ApplicationController)
@@ -29,7 +32,7 @@ module Databound
           end
         end
 
-        Object.const_set(as_constant_string(name), result)
+        result
       end
 
       def fallback_model(resource)

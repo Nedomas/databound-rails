@@ -1,11 +1,69 @@
 require 'spec_helper'
 
-describe PermitUpdateDestroyController, type: :controller do
+describe PermitController, type: :controller do
   CURRENT_USER_ID = 1
 
   before :each do
     Project.create(city: 'LA', user_id: 5)
     Project.create(city: 'LA', user_id: 1)
+  end
+
+  describe '#read' do
+    it 'raise when scope is not permitted' do
+      data = {
+        data: {
+          city: 'LA',
+          dont_permit: true,
+        },
+        scope: {},
+      }
+
+      expect { post(:where, javascriptize(data)) }.to raise_error(
+        Databound::NotPermittedError,
+        'Request for read not permitted',
+      )
+    end
+
+    it 'should update when param is permitted' do
+      data = {
+        data: {
+          city: 'Barcelona',
+          user_id: 1,
+        },
+        scope: {},
+      }
+
+      expect { post(:where, javascriptize(data)) }.not_to raise_error
+    end
+  end
+
+  describe '#create' do
+    it 'raise when scope is not permitted' do
+      data = {
+        data: {
+          city: 'Barcelona',
+          user_id: 2,
+        },
+        scope: {},
+      }
+
+      expect { post(:create, javascriptize(data)) }.to raise_error(
+        Databound::NotPermittedError,
+        'Request for create not permitted',
+      )
+    end
+
+    it 'should update when param is permitted' do
+      data = {
+        data: {
+          city: 'Barcelona',
+          user_id: 1,
+        },
+        scope: {},
+      }
+
+      expect { post(:create, javascriptize(data)) }.not_to raise_error
+    end
   end
 
   describe '#update' do

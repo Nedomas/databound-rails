@@ -107,7 +107,6 @@ module Databound
     end
 
     def table_columns
-      # permit all by default
       if mongoid?
         model.fields.keys.map(&:to_sym)
       elsif activerecord?
