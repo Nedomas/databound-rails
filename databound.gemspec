@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Domas Bitvinskas']
   spec.email         = ['domas.bitvinskas@me.com']
   spec.summary       = %q{Provides Javascript a simple API to the Ruby on Rails CRUD}
-  spec.description   = %q{It lets you use methods like create, update, destroy in the front-end while handling all the setup and providing basic security out of the box.}
+  spec.description   = %q{It lets you use methods like create, update, destroy in the Javascript while handling all the setup and providing basic security out of the box.}
   spec.homepage      = 'http://databound.me'
   spec.license       = 'MIT'
 

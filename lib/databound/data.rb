@@ -14,7 +14,7 @@ module Databound
     end
 
     def to_h
-      @data
+      @data || {}
     end
 
     private
