@@ -1,5 +1,7 @@
 module Databound
   class NotPermittedError < RuntimeError; end
+  class ConfigError < RuntimeError; end
+
   class Manager
     def initialize(controller)
       @controller = controller
@@ -65,9 +67,7 @@ module Databound
         model.where(scope.to_h).where_values.reduce(:and)
       end
 
-      nodes[1..-1].reduce(nodes.first) do |memo, node|
-        node.or(memo)
-      end
+      nodes.reduce(:or)
     end
 
     def check_params!(action)
@@ -119,7 +119,7 @@ module Databound
       elsif activerecord?
         model.column_names.map(&:to_sym)
       else
-        raise 'ORM not supported. Use ActiveRecord or Mongoid'
+        raise ConfigError, 'ORM not supported. Use ActiveRecord or Mongoid'
       end
     end
 
@@ -132,7 +132,7 @@ module Databound
     end
 
     def model
-      raise 'No model specified' unless model_name
+      raise ConfigError, 'No model specified' unless model_name
 
       model_name.to_s.camelize.constantize
     end

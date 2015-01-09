@@ -11,7 +11,7 @@ module Databound
     end
 
     def model(specified_model)
-      raise "Model '#{@model}' already specified" if @model
+      raise ConfigError, "Model '#{@model}' already specified" if @model
 
       @model = specified_model
     end

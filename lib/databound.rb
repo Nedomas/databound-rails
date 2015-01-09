@@ -11,7 +11,11 @@ require 'databound/rails/routes'
 module Databound
   def where
     records = @crud.find_scoped_records
-    render json: serialize_array(records)
+
+    render json: {
+      success: true,
+      records: serialize_array(records),
+    }
   end
 
   def create
