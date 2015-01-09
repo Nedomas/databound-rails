@@ -9,10 +9,6 @@ require 'databound/controller'
 require 'databound/rails/routes'
 
 module Databound
-  def self.included(base)
-    base.send(:before_action, :init_crud, only: %i(where create update destroy))
-  end
-
   def where
     records = @crud.find_scoped_records
     render json: serialize_array(records)
