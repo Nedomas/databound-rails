@@ -18,7 +18,8 @@ describe PermitController, type: :controller do
         scope: {},
       }
 
-      expect { post(:where, javascriptize(data)) }.to raise_error(
+      assert_responses(
+        -> { post(:where, javascriptize(data)) },
         Databound::NotPermittedError,
         'Request for read not permitted',
       )
@@ -47,7 +48,8 @@ describe PermitController, type: :controller do
         scope: {},
       }
 
-      expect { post(:create, javascriptize(data)) }.to raise_error(
+      assert_responses(
+        -> { post(:create, javascriptize(data)) },
         Databound::NotPermittedError,
         'Request for create not permitted',
       )
@@ -76,7 +78,8 @@ describe PermitController, type: :controller do
         scope: {},
       }
 
-      expect { post(:update, javascriptize(data)) }.to raise_error(
+      assert_responses(
+        -> { post(:update, javascriptize(data)) },
         Databound::NotPermittedError,
         'Request for update not permitted',
       )
@@ -104,7 +107,8 @@ describe PermitController, type: :controller do
         scope: {},
       }
 
-      expect { post(:destroy, javascriptize(data)) }.to raise_error(
+      assert_responses(
+        -> { post(:destroy, javascriptize(data)) },
         Databound::NotPermittedError,
         'Request for destroy not permitted',
       )

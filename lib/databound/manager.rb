@@ -1,5 +1,5 @@
 module Databound
-  class NotPermittedError < RuntimeError; end
+  class NotPermittedError < RuntimeError; STATUS = 405; end
   class ConfigError < RuntimeError; end
 
   class Manager

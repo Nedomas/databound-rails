@@ -8,13 +8,15 @@ module Databound
         Databound::Config.new(block, model)
       end
 
-      rescue_from Databound::NotPermittedError do |exception|
-        render(
-          status: 405,
-          json: {
-            message: exception.to_s,
-          },
-        )
+      if Rails.application.config.consider_all_requests_local
+        rescue_from Databound::NotPermittedError do |exception|
+          render(
+            status: Databound::NotPermittedError::STATUS,
+            json: {
+              message: exception.to_s,
+            },
+          )
+        end
       end
     end
   end

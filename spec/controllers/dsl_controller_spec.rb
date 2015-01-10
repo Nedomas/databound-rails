@@ -80,7 +80,8 @@ describe DslController, type: :controller do
           scope: {},
         }
 
-        expect { post(:create, javascriptize(data)) }.to raise_error(
+        assert_responses(
+          -> { post(:create, javascriptize(data)) },
           Databound::NotPermittedError,
           "DSL column 'city' received unmatched string 'New York'." \
           " Use 'strict: false' in DSL definition to allow everything.",
@@ -176,7 +177,8 @@ describe DslController, type: :controller do
           scope: {},
         }
 
-        expect { post(:create, javascriptize(data)) }.to raise_error(
+        assert_responses(
+          -> { post(:create, javascriptize(data)) },
           Databound::NotPermittedError,
           "DSL column 'city' received unmatched string 'New York'." \
           " Use 'strict: false' in DSL definition to allow everything.",

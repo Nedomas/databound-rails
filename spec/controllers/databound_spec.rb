@@ -44,7 +44,7 @@ describe UsersController, type: :controller do
       }
 
       post(:where, javascriptize(data))
-      expect(rubize(response)).to eq([])
+      expect(rubize(response)).to eq(success: true, records: [])
     end
 
     it 'respond with correct records' do

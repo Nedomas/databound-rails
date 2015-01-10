@@ -10,7 +10,8 @@ describe PostsController, type: :controller do
         scope: {},
       }
 
-      expect { post(:create, javascriptize(data)) }.to raise_error(
+      assert_responses(
+        -> { post(:create, javascriptize(data)) },
         Databound::NotPermittedError,
         'Request includes unpermitted columns: description',
       )
@@ -42,7 +43,8 @@ describe PostsController, type: :controller do
         scope: {},
       }
 
-      expect { post(:update, javascriptize(data)) }.to raise_error(
+      assert_responses(
+        -> { post(:update, javascriptize(data)) },
         Databound::NotPermittedError,
         'Request includes unpermitted columns: description',
       )
@@ -71,7 +73,8 @@ describe PostsController, type: :controller do
           scope: { description: 'Barcelona' },
         }
 
-        expect { post(:create, javascriptize(data)) }.to raise_error(
+        assert_responses(
+          -> { post(:create, javascriptize(data)) },
           Databound::NotPermittedError,
           'Request includes unpermitted columns: description',
         )
@@ -88,7 +91,8 @@ describe PostsController, type: :controller do
           scope: { description: 'Barcelona 2' },
         }
 
-        expect { post(:update, javascriptize(data)) }.to raise_error(
+        assert_responses(
+          -> { post(:update, javascriptize(data)) },
           Databound::NotPermittedError,
           'Request includes unpermitted columns: description',
         )

@@ -32,6 +32,8 @@ end
 
 def convert_scoped_records(obj)
   return obj unless obj.is_a?(Hash)
+  return obj unless obj[:scoped_records]
+
   result = obj
 
   converted = JSON.parse(obj[:scoped_records]).map do |record|
@@ -48,4 +50,20 @@ end
 
 def all_records(model = User)
   model.select(:id, :name, :city).map(&:attributes)
+end
+
+def assert_responses(code, error, msg)
+  friendly_handler = controller.class.rescue_handlers.first.last
+
+  controller.class.rescue_from(error) { raise error, msg }
+  expect(code).to raise_error(error, msg)
+
+  # check friendly handler
+  controller.class.rescue_from(error, with: friendly_handler)
+  code.call
+
+  expect(response.status).to eq(error::STATUS)
+  expect(rubize(response)).to eq(
+    message: msg,
+  )
 end
