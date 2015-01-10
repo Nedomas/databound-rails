@@ -56,7 +56,7 @@ describe UsersController, type: :controller do
       }
 
       post(:where, javascriptize(data))
-      expect(gather(:name, response)).to eq(%w(John Peter))
+      expect(gather(:records, :name, response)).to eq(%w(John Peter))
     end
   end
 
