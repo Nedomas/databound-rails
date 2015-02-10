@@ -158,7 +158,7 @@ module Databound
     end
 
     def filter_by_params!(records)
-      records.where(params.to_h)
+      records.where(or_query(params, *@extra_where_scopes))
     end
   end
 end
