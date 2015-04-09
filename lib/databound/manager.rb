@@ -124,7 +124,7 @@ module Databound
     end
 
     def mongoid?
-      defined?(Moigoid) and model.ancestors.include?(Mongoid::Document)
+      defined?(Mongoid) and model.ancestors.include?(Mongoid::Document)
     end
 
     def activerecord?
