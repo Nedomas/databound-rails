@@ -14,6 +14,7 @@ ActiveRecord::Schema.define do
   create_table(:projects, force: true) do |t|
     t.string :city
     t.integer :user_id
+    t.boolean :dont_permit
     t.timestamps
   end
 

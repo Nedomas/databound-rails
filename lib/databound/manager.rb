@@ -67,7 +67,18 @@ module Databound
         model.where(scope.to_h).where_values.reduce(:and)
       end
 
-      nodes.reduce(:or)
+      left_query = nodes.reduce(:or)
+      return unless left_query
+
+      [left_query.to_sql, *bound_values(scopes)]
+    end
+
+    def bound_values(scopes)
+      values = scopes.flat_map do |scope|
+        model.where(scope.to_h).bind_values
+      end
+
+      values.map(&:last)
     end
 
     def check_params!(action)
