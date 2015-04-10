@@ -13,7 +13,7 @@ describe PermitController, type: :controller do
       data = {
         data: {
           city: 'LA',
-          dont_permit: true,
+          dont_permit: 'true',
         },
         scope: {},
       }
