@@ -15,7 +15,7 @@ module Databound
     end
 
     def find_scoped_records(only_extra_scopes: false)
-      records = model.where(or_query(@scope, *@extra_where_scopes))
+      records = or_query(@scope, *@extra_where_scopes)
 
       unless only_extra_scopes
         records = filter_by_params!(records)
@@ -67,18 +67,15 @@ module Databound
         model.where(scope.to_h).where_values.reduce(:and)
       end
 
-      left_query = nodes.reduce(:or)
-      return unless left_query
-
-      [left_query.to_sql, *bound_values(scopes)]
+      model.where(nodes.reduce(:or)).tap do |q|
+        q.bind_values = bound_values(scopes)
+      end
     end
 
     def bound_values(scopes)
-      values = scopes.flat_map do |scope|
+      scopes.flat_map do |scope|
         model.where(scope.to_h).bind_values
       end
-
-      values.map(&:last)
     end
 
     def check_params!(action)
@@ -169,7 +166,7 @@ module Databound
     end
 
     def filter_by_params!(records)
-      records.where(or_query(params, *@extra_where_scopes))
+      records & or_query(params, *@extra_where_scopes)
     end
   end
 end
