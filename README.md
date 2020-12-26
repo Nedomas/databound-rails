@@ -10,7 +10,7 @@ Provides Javascript a simple CRUD API to the Ruby on Rails backend.
 
 This repo is for Ruby on Rails backend part of Databound.
 
-**Check out live examples on the Databound website** [databound.me](http://databound.me).
+
 
 **You can also check out the javascript** [Databound repo](https://github.com/Nedomas/databound).
 
